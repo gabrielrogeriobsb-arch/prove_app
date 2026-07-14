@@ -1,7 +1,7 @@
 name: Temporary tea extraction
 
 on:
-  push:
+  pull_request:
     branches: [main]
   workflow_dispatch:
 
@@ -12,8 +12,6 @@ jobs:
     steps:
       - name: Checkout extraction branch
         uses: actions/checkout@v4
-        with:
-          ref: tea-extract
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
