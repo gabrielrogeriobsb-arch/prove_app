@@ -1,0 +1,30 @@
+name: Temporary tea extraction
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout extraction branch
+        uses: actions/checkout@v4
+        with:
+          ref: tea-extract
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4 lxml openpyxl
+      - name: Run extraction
+        run: python extract_tea.py
+      - name: Upload extraction artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tea-catalog-extraction
+          path: output/
+          retention-days: 1
